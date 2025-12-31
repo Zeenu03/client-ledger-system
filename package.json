@@ -1,0 +1,24 @@
+{
+  "name": "client-ledger-system-root",
+  "version": "1.0.0",
+  "description": "Client Ledger System - Full Stack Application",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix my-react-app\" \"npm run dev --prefix my-react-app/backend\"",
+    "start": "concurrently \"npm run dev --prefix my-react-app\" \"npm start --prefix my-react-app/backend\"",
+    "install-all": "npm install && cd my-react-app && npm install && cd backend && npm install",
+    "backend": "npm run dev --prefix my-react-app/backend",
+    "frontend": "npm run dev --prefix my-react-app"
+  },
+  "keywords": [
+    "accounting",
+    "ledger",
+    "react",
+    "nodejs",
+    "postgresql"
+  ],
+  "author": "Gayatri Lemon & Co.",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

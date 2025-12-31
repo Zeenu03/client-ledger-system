@@ -131,12 +131,12 @@ export default function LedgerStatement() {
   const handleSaveNet = async (id) => {
     setEditNet((prev) => ({ ...prev, loading: true }));
     try {
-      // Find the particulars for this transaction
+      // Find the transaction to preserve its date and particulars
       const netItem = ledgerData.find(item => item.id === id);
       await transactionService.updateTransaction(id, {
         dr: parseFloat(editNet.dr) || 0,
         cr: 0,
-        date: new Date().toISOString().split('T')[0],
+        date: netItem.date,
         account: 'Net',
         particulars: netItem ? netItem.particulars : '',
       });

@@ -200,7 +200,6 @@ export default function Clients() {
                 type="number"
                 className="input-field"
                 placeholder="0.00"
-                step="0.01"
                 value={formData.openingbalance === 0 ? '' : formData.openingbalance}
                 onChange={(e) => {
                   const value = e.target.value === '' ? 0 : parseFloat(e.target.value)

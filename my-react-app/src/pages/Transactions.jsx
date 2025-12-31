@@ -326,7 +326,6 @@ export default function Transactions() {
                   type="number"
                   className={`input-field ${formData.account === 'No NET' ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                   placeholder="0.00"
-                  step="0.01"
                   min="0"
                   value={formData.account === 'No NET' ? '' : (formData.dr === 0 ? '' : formData.dr)}
                   onChange={(e) => {
@@ -347,7 +346,6 @@ export default function Transactions() {
                   type="number"
                   className={`input-field ${(formData.account === 'Net' || formData.account === 'No NET') ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                   placeholder="0.00"
-                  step="0.01"
                   min="0"
                   value={formData.account === 'No NET' ? '' : (formData.cr === 0 ? '' : formData.cr)}
                   onChange={(e) => {
