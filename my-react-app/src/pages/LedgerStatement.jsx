@@ -133,10 +133,17 @@ export default function LedgerStatement() {
     try {
       // Find the transaction to preserve its date and particulars
       const netItem = ledgerData.find(item => item.id === id);
+
+      // Extract just the date part (YYYY-MM-DD) from the date string
+      let dateStr = netItem.date;
+      if (typeof dateStr === 'string' && dateStr.includes('T')) {
+        dateStr = dateStr.split('T')[0];
+      }
+
       await transactionService.updateTransaction(id, {
         dr: parseFloat(editNet.dr) || 0,
         cr: 0,
-        date: netItem.date,
+        date: dateStr,
         account: 'Net',
         particulars: netItem ? netItem.particulars : '',
       });
