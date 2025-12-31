@@ -54,11 +54,7 @@ export default function Clients() {
       return
     }
 
-    // Validation - Opening balance (must be a positive number)
-    if (formData.openingbalance < 0) {
-      setError('Opening balance cannot be negative')
-      return
-    }
+    // Opening balance can be positive or negative (no validation needed)
 
     try {
       if (editingId) {
@@ -202,21 +198,19 @@ export default function Clients() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Opening Balance</label>
               <input
                 type="number"
-                className={`input-field ${formData.openingbalance < 0 ? 'border-red-500 bg-red-50' : ''}`}
+                className="input-field"
                 placeholder="0.00"
                 step="0.01"
-                min="0"
-                value={formData.openingbalance}
+                value={formData.openingbalance === 0 ? '' : formData.openingbalance}
                 onChange={(e) => {
                   const value = e.target.value === '' ? 0 : parseFloat(e.target.value)
                   setFormData({ ...formData, openingbalance: isNaN(value) ? 0 : value })
                 }}
               />
-              {formData.openingbalance < 0 && (
-                <p className="text-red-500 text-xs mt-1">Opening balance must be positive</p>
-              )}
-              {formData.openingbalance > 0 && (
-                <p className="text-green-600 text-xs mt-1">✓ Valid balance: ₹{formatAmount(formData.openingbalance)}</p>
+              {formData.openingbalance !== 0 && (
+                <p className={`text-xs mt-1 ${formData.openingbalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {formData.openingbalance > 0 ? '✓ Receivable' : '✓ Payable'}: ₹{formatAmount(Math.abs(formData.openingbalance))}
+                </p>
               )}
             </div>
             <div className="flex gap-2">
