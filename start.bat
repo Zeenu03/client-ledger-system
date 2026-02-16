@@ -1,7 +1,6 @@
 @echo off
 echo ================================================
 echo  Starting Client Ledger System
-echo  Gayatri Lemon ^& Co.
 echo ================================================
 echo.
 echo Installing concurrently if needed...
