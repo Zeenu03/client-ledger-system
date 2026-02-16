@@ -41,13 +41,16 @@ export const generateLedgerPDF = (clientName, fromDate, toDate, transactions, to
     const dr = parseFloat(item.dr || 0)
     const cr = parseFloat(item.cr || 0)
     const balance = parseFloat(item.running_balance || item.balance || 0)
+    
+    // Handle multiline particulars - replace newlines with <br> for HTML
+    const particularsFormatted = (item.particulars || '-').replace(/\n/g, '<br/>')
 
     return `
       <tr>
         <td style="border: 1px solid #000; padding: 10px 12px; font-size: 14px; text-align: center;">${idx + 1}</td>
         <td style="border: 1px solid #000; padding: 10px 12px; font-size: 14px;">${formatDateForPDF(item.date)}</td>
         <td style="border: 1px solid #000; padding: 10px 12px; font-size: 14px;">${item.account}</td>
-        <td style="border: 1px solid #000; padding: 10px 12px; font-size: 14px;">${item.particulars || '-'}</td>
+        <td style="border: 1px solid #000; padding: 10px 12px; font-size: 14px; white-space: pre-wrap;">${particularsFormatted}</td>
         <td style="border: 1px solid #000; padding: 10px 12px; text-align: right; font-size: 14px;">
           ${dr > 0 ? formatCurrency(dr) : '-'}
         </td>
@@ -69,7 +72,6 @@ export const generateLedgerPDF = (clientName, fromDate, toDate, transactions, to
     <div id="pdf-content" style="font-family: 'Arial', sans-serif; padding: 40px 50px; background: white; max-width: 1400px; margin: 0 auto;">
       <!-- Company Header -->
       <div style="position: relative; text-align: center; margin-bottom: 30px; border-bottom: 3px double #000; padding-bottom: 20px; min-height: 120px;">
-        <img src="/LOGO.png" alt="Company Logo" style="position: absolute; left: 0; top: 0; height: 120px; width: auto;" />
         <h1 style="margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">${companyName}</h1>
         <p style="margin: 8px 0 0 0; font-size: 16px; font-style: italic; letter-spacing: 0.5px;">SB lemoner</p>
         <p style="margin: 10px 0 0 0; font-size: 14px; letter-spacing: 0.5px;">${companyAddress}</p>

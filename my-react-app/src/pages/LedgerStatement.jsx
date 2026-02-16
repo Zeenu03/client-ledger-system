@@ -120,41 +120,6 @@ export default function LedgerStatement() {
   const totalCr = ledgerData.reduce((sum, item) => sum + parseFloat(item.cr || 0), 0)
   const closingBalance = ledgerData.length > 0 ? parseFloat(ledgerData[ledgerData.length - 1].running_balance || 0) : 0
 
-  // State for Add NET inline edit
-  const [editNet, setEditNet] = useState({
-    id: null,
-    dr: '',
-    loading: false,
-  });
-
-  // Handler for Save NET
-  const handleSaveNet = async (id) => {
-    setEditNet((prev) => ({ ...prev, loading: true }));
-    try {
-      // Find the transaction to preserve its date and particulars
-      const netItem = ledgerData.find(item => item.id === id);
-
-      // Extract just the date part (YYYY-MM-DD) from the date string
-      let dateStr = netItem.date;
-      if (typeof dateStr === 'string' && dateStr.includes('T')) {
-        dateStr = dateStr.split('T')[0];
-      }
-
-      await transactionService.updateTransaction(id, {
-        dr: parseFloat(editNet.dr) || 0,
-        cr: 0,
-        date: dateStr,
-        account: 'Net',
-        particulars: netItem ? netItem.particulars : '',
-      });
-      setEditNet({ id: null, dr: '', loading: false });
-      fetchLedgerData();
-    } catch (err) {
-      setError('Failed to update NET: ' + err.message);
-      setEditNet((prev) => ({ ...prev, loading: false }));
-    }
-  };
-
   return (
     <div className="space-y-6">
       {/* Error Message */}
@@ -258,7 +223,7 @@ export default function LedgerStatement() {
             onChange={handleFullYearChange}
           />
           <label htmlFor="fullYear" className="text-sm font-medium text-gray-700 cursor-pointer">
-            View Full Business Year Statement (Apr 2024 - Mar 2025)
+            View All Transactions (Full Statement)
           </label>
         </div>
       </div>
@@ -304,54 +269,14 @@ export default function LedgerStatement() {
                     const dr = parseFloat(item.dr || 0)
                     const cr = parseFloat(item.cr || 0)
                     const balance = parseFloat(item.running_balance || 0)
-                    // Render row
-                    if (item.account === 'No NET') {
-                      return (
-                        <tr key={item.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                          <td className="px-4 py-3 text-center text-gray-800">{idx + 1}</td>
-                          <td className="px-4 py-3 text-gray-800">{formatDate(item.date)}</td>
-                          <td className="px-4 py-3 text-gray-800">{item.account}</td>
-                          <td className="px-4 py-3 text-gray-600">{item.particulars || '-'}</td>
-                          <td className="px-4 py-3 text-right text-gray-800" colSpan={3}>
-                            {editNet.id === item.id ? (
-                              <div className="flex items-center gap-2">
-                                <input
-                                  type="number"
-                                  className="input-field w-24"
-                                  placeholder="0"
-                                  value={editNet.dr}
-                                  onChange={e => setEditNet((prev) => ({ ...prev, dr: e.target.value }))}
-                                  min="0"
-                                />
-                                <button
-                                  className="btn-primary btn-sm"
-                                  disabled={editNet.loading}
-                                  onClick={() => handleSaveNet(item.id)}
-                                >Save</button>
-                                <button
-                                  className="btn-secondary btn-sm"
-                                  onClick={() => setEditNet({ id: null, dr: '', loading: false })}
-                                >Cancel</button>
-                              </div>
-                            ) : (
-                              <button
-                                className="btn btn-sm bg-blue-500 text-white px-3 py-1 rounded"
-                                onClick={() => {
-                                  setEditNet({ id: item.id, dr: '', loading: false });
-                                }}
-                              >Add NET</button>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    }
-                    // Default row
+                    
+                    // All rows rendered the same way now (Add NET moved to Transactions page)
                     return (
                       <tr key={item.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-4 py-3 text-center text-gray-800">{idx + 1}</td>
                         <td className="px-4 py-3 text-gray-800">{formatDate(item.date)}</td>
                         <td className="px-4 py-3 text-gray-800">{item.account}</td>
-                        <td className="px-4 py-3 text-gray-600">{item.particulars || '-'}</td>
+                        <td className="px-4 py-3 text-gray-600 whitespace-pre-wrap">{item.particulars || '-'}</td>
                         <td className="px-4 py-3 text-right text-gray-800">{dr > 0 ? `₹${formatAmount(dr)}` : '-'}</td>
                         <td className="px-4 py-3 text-right text-gray-800">{cr > 0 ? `₹${formatAmount(cr)}` : '-'}</td>
                         <td className={`px-4 py-3 text-right font-semibold ${balance < 0 ? 'text-red-600' : 'text-green-600'}`}>₹{formatAmount(balance)}</td>

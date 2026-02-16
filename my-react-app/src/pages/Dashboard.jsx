@@ -32,7 +32,7 @@ export default function Dashboard() {
         <Link
           key={idx}
           to={item.path}
-          className={`bg-gradient-to-r ${item.color} text-white rounded-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer block group`}
+          className={`relative bg-gradient-to-r ${item.color} text-white rounded-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer block group`}
         >
           <div className="flex items-start gap-4">
             {/* Icon Container */}

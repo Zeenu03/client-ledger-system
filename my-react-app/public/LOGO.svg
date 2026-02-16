@@ -1,0 +1,18 @@
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="60" cy="60" r="55" fill="#2563eb" stroke="#1e40af" stroke-width="3"/>
+  
+  <!-- Lemon Shape -->
+  <ellipse cx="60" cy="60" rx="25" ry="35" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+  
+  <!-- Lemon Highlight -->
+  <ellipse cx="52" cy="50" rx="8" ry="12" fill="#fef3c7" opacity="0.6"/>
+  
+  <!-- Leaf -->
+  <path d="M 60 25 Q 70 20, 75 25 Q 70 30, 60 28 Z" fill="#10b981" stroke="#059669" stroke-width="1"/>
+  
+  <!-- Letter G -->
+  <text x="60" y="110" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+    GAYATRI
+  </text>
+</svg>

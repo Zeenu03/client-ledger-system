@@ -42,6 +42,10 @@ code {
   @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
+textarea.input-field {
+  @apply resize-y min-h-[80px];
+}
+
 .table-container {
   @apply overflow-x-auto;
 }
